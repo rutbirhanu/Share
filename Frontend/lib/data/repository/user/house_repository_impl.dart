@@ -14,7 +14,6 @@ class HouseRepositoryImpl implements HouseRepository{
 
   @override
   Future<List<HouseModel>> getHouseList() async{
-    // TODO: implement getHouseList
     List<HouseModel> houseList=await houseRemoteDatasource.getHouseList();
     //change the model to entity
     return houseList;

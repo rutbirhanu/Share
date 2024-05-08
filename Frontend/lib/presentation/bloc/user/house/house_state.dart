@@ -1,5 +1,5 @@
 
-import '../../../data/model/house_model.dart';
+import '../../../../data/model/house_model.dart';
 
 abstract class HouseState{}
 abstract class HouseActionState extends HouseState{}
@@ -17,4 +17,7 @@ class HouseSuccessState extends HouseState{
   HouseSuccessState({required this.houseList});
 }
 
-class HouseErrorState extends HouseState{}
+class HouseErrorState extends HouseState{
+  String error;
+  HouseErrorState({required this.error});
+}

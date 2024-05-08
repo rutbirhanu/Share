@@ -12,13 +12,13 @@ abstract class HouseRemoteDatasource{
 class HouseRemoteDatasourceImpl extends HouseRemoteDatasource{
   var client= http.Client();
   static const BASEURL ="http://localhost:1000/api/";
-  HouseRemoteDatasourceImpl(this.client);
+  HouseRemoteDatasourceImpl({required this.client});
 
   @override
   Future<List<HouseModel>> getHouseList() async{
     try{
       late List<HouseModel> houseModelList;
-      var response= await client.get(Uri.https('${BASEURL}houses'));
+      var response= await client.get(Uri.parse('${BASEURL}houses/getallhouse'));
       if (response.statusCode==200){
         List houseList= jsonDecode(response.body);
         houseModelList =houseList.map(

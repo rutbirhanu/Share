@@ -3,7 +3,7 @@ import 'package:roomies_frontend/domain/repository/user/house_repository.dart';
 
 class GetHouseList {
   final HouseRepository houseRepository;
-  const GetHouseList(this.houseRepository);
+  const GetHouseList({required this.houseRepository});
 
   Future<List<HouseModel>> call() async{
     return await houseRepository.getHouseList();

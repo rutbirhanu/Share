@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roomies_frontend/data/model/house_model.dart';
-import 'package:roomies_frontend/presentaion/bloc/user/house_bloc.dart';
-import 'package:roomies_frontend/presentaion/bloc/user/house_event.dart';
-import 'package:roomies_frontend/presentaion/bloc/user/house_state.dart';
-import 'package:roomies_frontend/presentaion/widget/user/house_card.dart';
+import 'package:roomies_frontend/presentation/bloc/user/house/house_bloc.dart';
+import 'package:roomies_frontend/presentation/bloc/user/house/house_event.dart';
+import 'package:roomies_frontend/presentation/bloc/user/house/house_state.dart';
+import 'package:roomies_frontend/presentation/widget/user/house_card.dart';
+
+import '../../../injection_container.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -23,7 +25,7 @@ class _HomePageState extends State<HomePage>{
     super.initState();
     houseBloc.add(InitialEvent());
 }
-  HouseBloc houseBloc= HouseBloc();
+  HouseBloc houseBloc= getit<HouseBloc>();
   @override
   Widget build(BuildContext context){
     List images=[
@@ -40,23 +42,23 @@ class _HomePageState extends State<HomePage>{
     ];
     return Scaffold(
           backgroundColor: Colors.black87,
-          bottomNavigationBar: CurvedNavigationBar(
-            backgroundColor: Colors.black,
-            color: Colors.white24,
-            animationDuration: Duration(milliseconds: 500),
-            buttonBackgroundColor: Color.fromRGBO(244, 196, 48,0.9),
-            onTap: (idx){
-              setState(() {
-                index=idx;
-              });
-            },
-            items: const [
-              CurvedNavigationBarItem(child:  Icon(Icons.home, color: Colors.white,), label: "home"),
-              CurvedNavigationBarItem(child:  Icon(Icons.comment, color: Colors.white),label: "comment"),
-              CurvedNavigationBarItem(child:  Icon(Icons.link_rounded, color: Colors.white),label: "link"),
-              CurvedNavigationBarItem(child:  Icon(Icons.person, color: Colors.white),label: "person")
-            ],
-          ),
+          // bottomNavigationBar: CurvedNavigationBar(
+          //   backgroundColor: Colors.black,
+          //   color: Colors.white24,
+          //   animationDuration: Duration(milliseconds: 500),
+          //   buttonBackgroundColor: Color.fromRGBO(244, 196, 48,0.9),
+          //   onTap: (idx){
+          //     setState(() {
+          //       index=idx;
+          //     });
+          //   },
+          //   items: const [
+          //     CurvedNavigationBarItem(child:  Icon(Icons.home, color: Colors.white,), label: "home"),
+          //     CurvedNavigationBarItem(child:  Icon(Icons.comment, color: Colors.white),label: "comment"),
+          //     CurvedNavigationBarItem(child:  Icon(Icons.link_rounded, color: Colors.white),label: "link"),
+          //     CurvedNavigationBarItem(child:  Icon(Icons.person, color: Colors.white),label: "person")
+          //   ],
+          // ),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Color.fromRGBO(244, 196, 48,0.9),
@@ -117,7 +119,6 @@ class _HomePageState extends State<HomePage>{
               builder: (context, state) {
                switch(state.runtimeType){
                  // case InitialState:
-
                  case LoadingState:
                  return Center(
                    child: CircularProgressIndicator(),

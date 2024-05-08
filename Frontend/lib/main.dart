@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import "package:carousel_slider/carousel_slider.dart";
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:roomies_frontend/presentaion/page/user/home_page.dart';
-import 'package:roomies_frontend/presentaion/page/user/house_detail.dart';
+import 'package:roomies_frontend/presentation/page/user/home_page.dart';
+import 'package:roomies_frontend/presentation/page/user/house_detail.dart';
 
 void main() {
   runApp(const MyApp());

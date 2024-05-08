@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-import 'package:roomies_frontend/data/datasource/user/house_remote_datasource.dart';
 import 'package:roomies_frontend/data/model/house_model.dart';
-import 'package:roomies_frontend/presentaion/bloc/user/house_event.dart';
-import 'package:roomies_frontend/presentaion/bloc/user/house_state.dart';
-import "package:http/http.dart" as http;
+import 'package:roomies_frontend/domain/usecase/user/get_house_list.dart';
+import 'package:roomies_frontend/presentation/bloc/user/house/house_event.dart';
+import 'package:roomies_frontend/presentation/bloc/user/house/house_state.dart';
 
 class HouseBloc extends Bloc<HouseEvent, HouseState> {
-  HouseBloc() : super(InitialState()) {
+  GetHouseList getHouseList;
+  HouseBloc(this.getHouseList) : super(InitialState()) {
     on<InitialEvent>(initialEvent);
     on<HouseDetailEvent>(houseDetailEvent);
     on<AddToFavoriteHouseEvent>(addToFavoriteHouseEvent);
@@ -19,17 +19,15 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
       Emitter<HouseState> emit) async{
     emit(LoadingState());
     late List<HouseModel> houseList;
-    var client = http.Client();
     try{
-      HouseRemoteDatasourceImpl houseRemoteDatasource = HouseRemoteDatasourceImpl(client);
-      houseList = await houseRemoteDatasource.getHouseList();
+     houseList= await getHouseList();
+     emit(HouseSuccessState(houseList: houseList));
     }
     catch(e){
-      emit(HouseErrorState());
+      emit(HouseErrorState(error: e.toString()));
       log(e.toString());
     }
 
-    emit(HouseSuccessState(houseList: houseList));
   }
 
   FutureOr<void> houseDetailEvent(HouseDetailEvent event,
