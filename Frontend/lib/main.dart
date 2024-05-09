@@ -7,8 +7,11 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:roomies_frontend/presentation/page/user/home_page.dart';
 import 'package:roomies_frontend/presentation/page/user/house_detail.dart';
+import 'package:roomies_frontend/injection_container.dart';
+
 
 void main() {
+  init();
   runApp(const MyApp());
 }
 final GoRouter _route=GoRouter(

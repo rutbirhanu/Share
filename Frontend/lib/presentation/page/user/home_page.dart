@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roomies_frontend/data/model/house_model.dart';
@@ -42,23 +46,23 @@ class _HomePageState extends State<HomePage>{
     ];
     return Scaffold(
           backgroundColor: Colors.black87,
-          // bottomNavigationBar: CurvedNavigationBar(
-          //   backgroundColor: Colors.black,
-          //   color: Colors.white24,
-          //   animationDuration: Duration(milliseconds: 500),
-          //   buttonBackgroundColor: Color.fromRGBO(244, 196, 48,0.9),
-          //   onTap: (idx){
-          //     setState(() {
-          //       index=idx;
-          //     });
-          //   },
-          //   items: const [
-          //     CurvedNavigationBarItem(child:  Icon(Icons.home, color: Colors.white,), label: "home"),
-          //     CurvedNavigationBarItem(child:  Icon(Icons.comment, color: Colors.white),label: "comment"),
-          //     CurvedNavigationBarItem(child:  Icon(Icons.link_rounded, color: Colors.white),label: "link"),
-          //     CurvedNavigationBarItem(child:  Icon(Icons.person, color: Colors.white),label: "person")
-          //   ],
-          // ),
+          bottomNavigationBar: CurvedNavigationBar(
+            backgroundColor: Colors.black,
+            color: Colors.white24,
+            animationDuration: Duration(milliseconds: 500),
+            buttonBackgroundColor: Color.fromRGBO(244, 196, 48,0.9),
+            onTap: (idx){
+              setState(() {
+                index=idx;
+              });
+            },
+            items: const [
+              CurvedNavigationBarItem(child:  Icon(Icons.home, color: Colors.white,)),
+              CurvedNavigationBarItem(child:  Icon(Icons.comment, color: Colors.white)),
+              CurvedNavigationBarItem(child:  Icon(Icons.link_rounded, color: Colors.white)),
+              CurvedNavigationBarItem(child:  Icon(Icons.person, color: Colors.white))
+            ],
+          ),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Color.fromRGBO(244, 196, 48,0.9),
@@ -113,15 +117,15 @@ class _HomePageState extends State<HomePage>{
           ),
           body: BlocConsumer<HouseBloc, HouseState>(
              bloc: houseBloc,
-              buildWhen: (previous, current)=> current is HouseActionState ,
-              listenWhen:(previous, current)=> current is !HouseActionState ,
+              buildWhen: (previous, current)=> current is !HouseActionState ,
+              listenWhen:(previous, current)=> current is HouseActionState ,
               listener: (BuildContext context, Object? state) { },
               builder: (context, state) {
                switch(state.runtimeType){
                  // case InitialState:
                  case LoadingState:
                  return Center(
-                   child: CircularProgressIndicator(),
+                   child: CircularProgressIndicator(color: Colors.white,),
                  );
 
                  case HouseSuccessState:
@@ -130,8 +134,7 @@ class _HomePageState extends State<HomePage>{
                      child:Center(
                        child: Container(
                          width: width*0.8,
-                         child: ListView(
-                           // shrinkWrap: true,
+                         child: Column(
                            children: [
                              Container(
                                margin: EdgeInsets.symmetric(vertical: 5),
@@ -175,11 +178,13 @@ class _HomePageState extends State<HomePage>{
                              ),
                              SizedBox(height: 60,),
 
-                             ListView.builder(
-                               itemCount: successState.houseList.length,
-                                 itemBuilder: (context, index){
-                                   HouseCard(housemodel: successState.houseList[index]);
-                                 }
+                             Expanded(
+                               child: ListView.builder(
+                                 itemCount: successState.houseList.length,
+                                   itemBuilder: (context, index){
+                                  return HouseCard(housemodel: successState.houseList[index]);
+                                   }
+                               ),
                              )
                            ],
                          ),

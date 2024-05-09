@@ -1,5 +1,6 @@
 import 'package:roomies_frontend/data/datasource/user/house_remote_datasource.dart';
 import 'package:roomies_frontend/data/model/house_model.dart';
+import 'package:roomies_frontend/domain/entity/house_entity.dart';
 import 'package:roomies_frontend/domain/repository/user/house_repository.dart';
 
 class HouseRepositoryImpl implements HouseRepository{
@@ -13,10 +14,10 @@ class HouseRepositoryImpl implements HouseRepository{
   }
 
   @override
-  Future<List<HouseModel>> getHouseList() async{
+  Future<List<HouseEntity>> getHouseList() async{
     List<HouseModel> houseList=await houseRemoteDatasource.getHouseList();
-    //change the model to entity
-    return houseList;
+    List<HouseEntity> houseEntityList= houseList.map((house) =>house.toEntity()).toList();
+    return houseEntityList;
   }
 
   @override

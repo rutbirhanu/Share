@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:roomies_frontend/data/model/house_model.dart';
+import 'package:roomies_frontend/domain/entity/house_entity.dart';
 import 'package:roomies_frontend/domain/usecase/user/get_house_list.dart';
 import 'package:roomies_frontend/presentation/bloc/user/house/house_event.dart';
 import 'package:roomies_frontend/presentation/bloc/user/house/house_state.dart';
@@ -18,7 +19,7 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
   FutureOr<void> initialEvent(InitialEvent event,
       Emitter<HouseState> emit) async{
     emit(LoadingState());
-    late List<HouseModel> houseList;
+    late List<HouseEntity> houseList;
     try{
      houseList= await getHouseList();
      emit(HouseSuccessState(houseList: houseList));
@@ -27,7 +28,6 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
       emit(HouseErrorState(error: e.toString()));
       log(e.toString());
     }
-
   }
 
   FutureOr<void> houseDetailEvent(HouseDetailEvent event,

@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:roomies_frontend/domain/entity/house_entity.dart';
 
 class HouseDetail extends StatelessWidget{
-  const HouseDetail({super.key});
+  late  HouseEntity houseEntity;
+   HouseDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class HouseDetail extends StatelessWidget{
          height: height,
          child: Stack(
            children: [
-             Image(image: NetworkImage("https://www.redfin.com/blog/wp-content/uploads/2021/08/220-Maryland-Ave-21122-1.jpg"),
+             Image(image: NetworkImage(houseEntity.Images[0] as String),
              fit: BoxFit.fill,),
              Positioned(
                bottom: 0,
@@ -45,7 +47,7 @@ class HouseDetail extends StatelessWidget{
                          children: [
                           Icon(Icons.room, color: Colors.white60,),
                            SizedBox(width: 17,),
-                           Text("Bole, Addis Ababa ", style: TextStyle(color: Colors.white),),
+                           Text(houseEntity.location, style: TextStyle(color: Colors.white),),
                          ],
                        ),
                      ),
@@ -56,7 +58,7 @@ class HouseDetail extends StatelessWidget{
                          children: [
                            Icon(Icons.square_foot, color: Colors.white,),
                            SizedBox(width: 17,),
-                           Text("Modern | 21,000 square feet", style: TextStyle(color: Colors.white)),
+                           Text(houseEntity.description, style: TextStyle(color: Colors.white)),
                          ],
                        ),
                      ),
@@ -67,7 +69,7 @@ class HouseDetail extends StatelessWidget{
                          children: [
                            Icon(Icons.monetization_on, color: Colors.green,),
                            SizedBox(width: 17,),
-                           Text("12,000 ETB per month", style: TextStyle(color: Colors.white)),
+                           Text(houseEntity.price as String, style: TextStyle(color: Colors.white)),
                          ],
                        ),
                      ),
@@ -78,15 +80,11 @@ class HouseDetail extends StatelessWidget{
                          children: [
                            Icon(Icons.roofing_outlined, color: Colors.red,),
                            SizedBox(width: 17,),
-                           Text("1 bedroom  |  2 toilet  | 1 kitchen", style: TextStyle(color: Colors.white)),
+                           Text(houseEntity.numberOfRoom as String, style: TextStyle(color: Colors.white)),
                          ],
                        ),
                      ),
-                     SizedBox(height: 8,),
-                     Padding(
-                       padding: const EdgeInsets.only(left: 40),
-                       child: Text("Total of 5 rooms", style: TextStyle(color: Colors.white)),
-                     ),
+
                      Expanded(
                        child: Align(
                          alignment: Alignment.bottomCenter,

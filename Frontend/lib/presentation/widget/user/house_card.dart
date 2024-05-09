@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:roomies_frontend/data/model/house_model.dart';
+import 'package:roomies_frontend/domain/entity/house_entity.dart';
 
 class HouseCard extends StatelessWidget{
-  HouseModel housemodel;
+  HouseEntity housemodel;
    HouseCard({super.key, required this.housemodel});
 
   @override
@@ -37,10 +40,11 @@ class HouseCard extends StatelessWidget{
                  dotVerticalPadding: 10.0,
                  showIndicator: true,
                  indicatorBgPadding: 7.0,
-               images: housemodel.images.map((image) =>
-                     Image(
-                       image:NetworkImage(image.photo),
-                       fit: BoxFit.cover,),
+               images: housemodel.Images.map((image){
+                 print(image.imageUrl);
+                    return Image(
+                       image:FileImage(File(image.imageUrl)),
+                       fit: BoxFit.cover,);},
                  ).toList()
 
              ),

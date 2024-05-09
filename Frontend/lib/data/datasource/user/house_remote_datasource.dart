@@ -22,8 +22,11 @@ class HouseRemoteDatasourceImpl extends HouseRemoteDatasource{
       if (response.statusCode==200){
         List houseList= jsonDecode(response.body);
         houseModelList =houseList.map(
-                (house) => HouseModel.fromJson(house)
+                (house) {
+                  return HouseModel.fromJson(house);
+                }
         ).toList();
+
         return houseModelList;
       }  else{
          throw ServerException(errorMessage: "server error");
